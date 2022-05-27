@@ -15,3 +15,7 @@ Route::middleware(['auth'])->group(function(){
 
     route::get('/page', [IndexController::class,'userAppointment'])->name('userAppointment');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
