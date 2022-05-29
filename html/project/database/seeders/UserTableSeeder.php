@@ -20,16 +20,16 @@ class UserTableSeeder extends Seeder
         User:: insert([
           [
             'name' => 'himel',
-            'appointmentTime' => '2021-03-12 12:22',
             'email' => 'himel@gmail.com',
             'password' => hash::make('123'),
+            'role' => 'admin',
             'created_at' => date('y-m-d h:i:s')
           ],
           [
             'name' => 'himel1',
-            'appointmentTime' => '2021-03-13 12:22',
             'email' => 'himel1@gmail.com',
             'password' => hash::make('123'),
+            'role' => 'user',
             'created_at' => date('y-m-d h:i:s')
           ]
         ]);

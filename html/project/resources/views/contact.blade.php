@@ -9,11 +9,14 @@
       <div class="row">
         <div class="col-md-6">
           <div class="mail_section">
-            <input type="text" class="mail_text" placeholder="Name" name="text">
-            <input type="text" class="mail_text" placeholder="Email" name="text">
-            <input type="text" class="mail_text" placeholder="Phone Number" name="text">
-            <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-            <div class="send_bt"><a href="#">SEND</a></div>
+            <form action="{{route('contact')}}" method="post">
+              @csrf
+            <input type="text" class="mail_text" placeholder="Name" id="name" name="name" required>
+            <input type="text" class="mail_text" placeholder="Email" id="email" name="email" required>
+            <input type="text" class="mail_text" placeholder="Phone Number"  id="phone" name="phone" required>
+            <textarea class="massage-bt" placeholder="Massage" rows="5" id="messege" name="Massage"></textarea>
+            <div class="send_bt"><a href="#"><button class="btn btn-border-none"type="submit">SEND</button></a></div>
+          </form>
           </div>
         </div>
         <div class="col-md-6">

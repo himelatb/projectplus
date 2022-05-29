@@ -1,6 +1,11 @@
 @extends('layouts.app')
 <!-- banner section start -->
 @section('content')
+@if(session()->has('success'))
+<div class="alert alert-success">
+   {{ session()->get('success') }}
+</div>
+@endif
 <div class="banner_section">
   <section class="slide-wrapper">
     <div class="container">
@@ -81,7 +86,7 @@
   </section>
 </div>
 <!-- banner section end -->
-<!-- about section start -->
+<!--about section start
 <div class="about_section layout_padding">
   <div class="container">
     <div class="row">
@@ -97,7 +102,7 @@
     </div>
   </div>
 </div>
-<!-- about section end -->
+about section end -->
 <!-- service section start -->
 <div class="service_section layout_padding">
   <div class="container">
@@ -217,7 +222,7 @@
   </div>
 </div>
 <!-- client section end -->
-<!-- contact section start -->
+<!-- contact section start
 <div class="contact_section layout_padding">
   <div class="container">
     <h1 class="contact_taital">Contact Us</h1>
@@ -244,7 +249,7 @@
 </div>
 </div>
 </div>
-<!-- contact section end -->
+ contact section end -->
 <!-- join us section start -->
 <div class="join_section">
   <div class="container">
