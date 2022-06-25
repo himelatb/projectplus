@@ -8,7 +8,7 @@ use App\Models\BlogContent;
 
 class BlogContentController extends Controller
 {
-    public function BlogPosts(){
+    public function index(){
 
       $posts = User::with('content')->get();
 
@@ -16,7 +16,7 @@ class BlogContentController extends Controller
 
     }
 
-    public function BlogPostsDetail($id){
+    public function detailpage($id){
 
       $blog = BlogContent::where('id',$id)->first();
       $posts = BlogContent::with('writer')
@@ -28,4 +28,5 @@ class BlogContentController extends Controller
       return view('fulldetail', compact('blog', 'posts'));
 
     }
+
 }

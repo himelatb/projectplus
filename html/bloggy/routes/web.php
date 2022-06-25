@@ -13,15 +13,18 @@ use App\Http\Controllers\BlogContentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [App\Http\Controllers\BlogContentController::class, 'BlogPosts'])->name('index');
-Route::post('/Uploader', [App\Http\Controllers\HomeController::class, 'Uploader'])->name('Uploader');
-Route::get('{id}/blog', [App\Http\Controllers\BlogContentController::class, 'BlogPostsDetail'])->name('detail');
+Route::get('/', [App\Http\Controllers\BlogContentController::class, 'index'])->name('index');
+Route::post('/uploader', [App\Http\Controllers\HomeController::class, 'uploader'])->name('uploader');
+Route::get('{id}/detail', [App\Http\Controllers\BlogContentController::class, 'detailpage'])->name('detail');
 
 Auth::routes();
 
 route::middleware('auth')->group(function (){
 
-          Route::get('/home', [App\Http\Controllers\HomeController::class, 'indexHome'])->name('home');
+          Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+          Route::get('{id}/delete', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
+          Route::get('{id}/edit', [App\Http\Controllers\HomeController::class, 'edit'])->name('edit');
+            Route::post('{id}/update', [App\Http\Controllers\HomeController::class, 'update'])->name('update');
 
 
 });

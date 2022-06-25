@@ -7,7 +7,7 @@ use Auth;
 use App\Models\User;
 use App\Models\BlogContent;
 use DB;
-
+use Illuminate\Http\File;
 
 
 class HomeController extends Controller
@@ -27,7 +27,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function indexHome()
+    public function home()
     {
       $posts = BlogContent::where('user_id',Auth::user()->id)->get();
 
@@ -36,23 +36,60 @@ class HomeController extends Controller
 
     }
 
-    public function Uploader(Request $req)
-{
+    public function delete($id){
 
+      BlogContent::where('id',$id)->delete();
 
-  $photoName = rand().'.'.$req->file('image')->guessExtension();
+      $posts = BlogContent::where('user_id',Auth::user()->id)->get();
+
+      return redirect()->route('home',compact('posts'))->with('success','Deleted successfully');
+
+    }
+
+    public function uploader(Request $req){
+
 
 
       $upload = new BlogContent;
+      $upload->user_id= Auth::user()->id;
+      $upload->postTitle=$req->title;
+      $upload->postSummary=$req->summary;
+      $upload->postDescription=$req->description;
+
+      if($req->file('image')!=''){
+        $photoName = rand().'.'.$req->file('image')->guessExtension();
+      $upload->postPhoto=$req->image->move('public/assets/img',$photoName);
+    }
+      $upload->save();
+
+      return redirect('home')->with('success','Post successfully.');
+
+    }
+
+
+    public function update(Request $req, $id){
+
+      $upload = BlogContent::find($id);
       $upload->user_id=Auth::user()->id;
       $upload->postTitle=$req->title;
       $upload->postSummary=$req->summary;
       $upload->postDescription=$req->description;
-      $upload->postPhoto=$req->image->move('public/assets/img',$photoName);
-      $upload->save();
 
-      return redirect('home')->with('success','You have successfully posted.');
+      if($req->file('image')!=''){
+        $upload->postPhoto=$req->image->move('public/assets/img',rand().'.'.$req->file('image')->GetExtension());
+      }
 
+      $upload->update();
+      return redirect('home')->with('success','Updated successfully');
+
+    }
+
+
+    public function edit($req){
+
+      $post=BlogContent::find($req);
+
+      return view('edit',compact('post'));
 
     }
 

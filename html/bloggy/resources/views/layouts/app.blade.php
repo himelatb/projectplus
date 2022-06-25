@@ -175,7 +175,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Bloggy') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -198,11 +198,11 @@
 
 
 
-      <div id="app">
+  <div id="app">
           <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
               <div class="container">
                   <a class="navbar-brand" href="{{ url('/') }}">
-                      {{ config('app.name', 'Bloggy') }}
+                      <p class="tm-gold-text">Bloggy</p>
                   </a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                       <span class="navbar-toggler-icon"></span>
@@ -271,47 +271,53 @@
               </div>
           </nav>
           @if(session()->has('success'))
-          <div class="alert alert">
-            <p>{{session()->get('success')}}</p>
+          <div class="alert alert-success" role="alert">
+            <h5>{{session()->get('success')}}</h5>
           </div>
           @endif
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <form action="{{route('Uploader')}}" method="post" enctype="multipart/form-data">
-  @csrf
+          @if(session()->has('warning'))
+          <div class="alert alert-warning" role="alert">
+            <h5>{{session()->get('warning')}}</h5>
+          </div>
+          @endif
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <input type="text" class="form-control"  name="title" placeholder="Tile"/>
-        <input type="text" class="form-control"  name="summary" placeholder="Summary"/>
-        <input type="text" class="form-control"  name="description"  placeholder="Description"/>
-        <input type="file" class="form-control"  name="image"  />
-      </div>
+</div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-outline-success">Save changes</button>
-      </div>
+
+
+  <!-- Post Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<form action="{{route('uploader')}}" method="post" enctype="multipart/form-data">
+@csrf
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">Post</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" class="form-control"  name="title"  placeholder="Title" required>
+      <input type="text" class="form-control"  name="summary" placeholder="Summary" required>
+      <textarea type="text" class="form-control" name="description"  placeholder="Description" required></textarea>
+      <input type="file" class="form-control"  name="image" >
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+      <button type="submit" class="btn btn-outline-success">Save</button>
     </div>
   </div>
+</div>
 
 </form>
 </div>
-
-          <main class="py-4">
+          <main class="py-10" style="padding-bottom: 10px;">
 
               @yield('content')
           </main>
-      </div>
-    </section>
-
 
   <!-- load JS files -->
            <!-- jQuery (https://jquery.com/download/) -->

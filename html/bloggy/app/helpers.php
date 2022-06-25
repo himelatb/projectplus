@@ -6,4 +6,3 @@ function prd($p){
   print_r($p);die;
 
 }
- ?>
