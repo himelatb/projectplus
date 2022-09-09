@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Http\File;
+
 use App\Models\User;
 use App\Models\BlogContent;
+
 use DB;
-use Illuminate\Http\File;
+use Auth;
+use Validator;
 
 
 class HomeController extends Controller
@@ -37,32 +40,38 @@ class HomeController extends Controller
     }
 
     public function delete($id){
-
-      BlogContent::where('id',$id)->delete();
-
-      $posts = BlogContent::where('user_id',Auth::user()->id)->get();
-
-      return redirect()->route('home',compact('posts'))->with('success','Deleted successfully');
+       BlogContent::where('id',$id)->delete();
+       return redirect()->route('home')->with('success','Deleted successfully');
 
     }
 
     public function uploader(Request $req){
+      $validator = Validator::make($req->all(), [
+          'title' => ['required', 'string', 'unique:blog_contents,postTitle'],
+          'summary' => ['required', 'string'],
+          'description' => ['required', 'string', 'min:10'],
+          'image' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:2048']
+      ]);
 
-
-
+      if ($validator->fails()) {
+        return redirect()
+          ->back()
+          ->withInput()
+          ->withErrors($validator->errors());
+      }
       $upload = new BlogContent;
-      $upload->user_id= Auth::user()->id;
-      $upload->postTitle=$req->title;
-      $upload->postSummary=$req->summary;
-      $upload->postDescription=$req->description;
+      $upload->user_id = Auth::user()->id;
+      $upload->postTitle = $req->title;
+      $upload->postSummary = $req->summary;
+      $upload->postDescription = $req->description;
 
-      if($req->file('image')!=''){
-        $photoName = rand().'.'.$req->file('image')->guessExtension();
-      $upload->postPhoto=$req->image->move('public/assets/img',$photoName);
-    }
+      if(!empty($req->file('image'))){
+         $photoName = rand().'.'.$req->file('image')->guessExtension();
+         $upload->postPhoto=$req->image->move('public/assets/img',$photoName);
+      }
       $upload->save();
 
-      return redirect('home')->with('success','Post successfully.');
+      return redirect('home')->with('success','Posted successfully.');
 
     }
 
@@ -79,7 +88,7 @@ class HomeController extends Controller
         $upload->postPhoto=$req->image->move('public/assets/img',rand().'.'.$req->file('image')->GetExtension());
       }
 
-      $upload->update();
+      $upload->save();
       return redirect('home')->with('success','Updated successfully');
 
     }

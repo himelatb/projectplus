@@ -14,7 +14,6 @@ use App\Http\Controllers\BlogContentController;
 |
 */
 Route::get('/', [App\Http\Controllers\BlogContentController::class, 'index'])->name('index');
-Route::post('/uploader', [App\Http\Controllers\HomeController::class, 'uploader'])->name('uploader');
 Route::get('{id}/detail', [App\Http\Controllers\BlogContentController::class, 'detailpage'])->name('detail');
 
 Auth::routes();
@@ -24,7 +23,8 @@ route::middleware('auth')->group(function (){
           Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
           Route::get('{id}/delete', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
           Route::get('{id}/edit', [App\Http\Controllers\HomeController::class, 'edit'])->name('edit');
-            Route::post('{id}/update', [App\Http\Controllers\HomeController::class, 'update'])->name('update');
+          Route::post('{id}/update', [App\Http\Controllers\HomeController::class, 'update'])->name('update');
+          Route::post('/uploader', [App\Http\Controllers\HomeController::class, 'uploader'])->name('uploader');
 
 
 });

@@ -12,7 +12,7 @@
                             <h3>{{$blog->postSummary}}</h3>
                             <img src="{{asset($blog->postPhoto)}}" alt="Image not found" style="border-bottom-style: solid;padding-left: 140px;border-bottom-width: 0px;margin-top: 20px;margin-bottom: 20px;" class="col-xl-10">
 
-                            <h2>{{$blog->postDescription}}</h2>
+                            <h2 style="text-align:justify">{{$blog->postDescription}}</h2>
 
 
                         </div>
